@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous" />
 
   <style>
     :root {
@@ -1051,14 +1051,14 @@
           <div class="kontak-icon"><i class="fab fa-whatsapp"></i></div>
           <div class="kontak-item-text">
             <strong>WhatsApp</strong>
-            <a href="https://wa.me/6282214454752" target="_blank">+62 822-1000-0000</a>
+            <a href="https://wa.me/6282214454752" target="_blank" rel="noopener noreferrer">+62 822-1000-0000</a>
           </div>
         </div>
         <div class="kontak-item">
           <div class="kontak-icon"><i class="fab fa-instagram"></i></div>
           <div class="kontak-item-text">
             <strong>Instagram</strong>
-            <a href="https://instagram.com" target="_blank">@bandungprivatetour</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">@bandungprivatetour</a>
           </div>
         </div>
         <div class="kontak-item">
@@ -1098,9 +1098,9 @@
         </a>
         <p>Layanan transportasi premium di Bandung untuk city tour, perjalanan antar kota, dan antar jemput bandara. Kepercayaan dan kenyamanan Anda adalah prioritas kami.</p>
         <div class="footer-socials">
-          <a class="footer-social" href="https://wa.me/6282214454752" target="_blank"><i class="fab fa-whatsapp"></i></a>
-          <a class="footer-social" href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a class="footer-social" href="https://maps.google.com" target="_blank"><i class="fas fa-map-marker-alt"></i></a>
+          <a class="footer-social" href="https://wa.me/6282214454752" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+          <a class="footer-social" href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+          <a class="footer-social" href="https://maps.google.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -1139,7 +1139,7 @@
 </footer>
 
 <!-- WA FLOAT BUTTON -->
-<a class="wa-float" href="https://wa.me/6282214454752" target="_blank" title="Chat WhatsApp">
+<a class="wa-float" href="https://wa.me/6282214454752" target="_blank" rel="noopener noreferrer" title="Chat WhatsApp">
   <i class="fab fa-whatsapp"></i>
   <span class="wa-tooltip">Chat WhatsApp</span>
 </a>
@@ -1168,19 +1168,31 @@
   if (dateInput) { const today = new Date().toISOString().split('T')[0]; dateInput.min = today; }
 
   // WA Booking
+  function sanitize(str) {
+    return str.replace(/[<>"'&]/g, function(c) {
+      return {'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c];
+    });
+  }
+
   function pesanViaWA() {
-    const nama = document.getElementById('f-nama').value.trim();
+    const nama = sanitize(document.getElementById('f-nama').value.trim());
     const wa = document.getElementById('f-wa').value.trim();
     const tanggal = document.getElementById('f-tanggal').value;
     const layanan = document.getElementById('f-layanan').value;
-    const tujuan = document.getElementById('f-tujuan').value.trim();
+    const tujuan = sanitize(document.getElementById('f-tujuan').value.trim());
     const mobil = document.getElementById('f-mobil').value;
     const pax = document.getElementById('f-pax').value;
     const jam = document.getElementById('f-jam').value;
-    const catatan = document.getElementById('f-catatan').value.trim();
+    const catatan = sanitize(document.getElementById('f-catatan').value.trim());
 
     if (!nama || !wa || !tanggal || !layanan || !tujuan || !mobil) {
       alert('Mohon lengkapi semua field yang diperlukan (Nama, WhatsApp, Tanggal, Layanan, Tujuan, dan Pilihan Mobil).');
+      return;
+    }
+
+    var waPattern = /^\+?[0-9]{8,15}$/;
+    if (!waPattern.test(wa)) {
+      alert('Nomor WhatsApp tidak valid. Gunakan format angka (contoh: 08xxxxxxxxxx).');
       return;
     }
 
