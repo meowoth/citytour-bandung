@@ -1,0 +1,20 @@
+{
+  "name": "citytour-bandung",
+  "version": "1.0.0",
+  "description": "Website City Tour Bandung dan Antar Jemput Bandara",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}
